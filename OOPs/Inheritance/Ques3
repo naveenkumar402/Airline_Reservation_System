@@ -1,0 +1,30 @@
+class Animal{
+	String name,sound;
+	void makeSound() {
+		System.out.println(name.toString());
+		System.out.println(sound.toString());
+		System.out.println();
+	}
+}
+class Dog extends Animal{
+	void makeSound(String name,String sound) {
+		this.name=name;
+		this.sound=sound;
+		makeSound();
+	}
+}
+class Cat extends Animal{
+	void makeSound(String name,String sound) {
+		this.name=name;
+		this.sound=sound;
+		makeSound();
+	}
+}
+public class Mock {
+	public static void main(String []args) {
+		Dog d=new Dog();
+		Cat c=new Cat();
+		d.makeSound("Puppy","Woof");
+		c.makeSound("Tom","Meow");
+	}
+}
