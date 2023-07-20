@@ -1,0 +1,243 @@
+package Reservation;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+
+class Passenger {
+    private String name;
+    private int age;
+    private long mobile;
+
+    public Passenger(String name, int age, long mobile) {
+        this.name = name;
+        this.age = age;
+        this.mobile = mobile;
+    }
+}
+
+class Flight {
+    private String flightNumber;
+    private String flightname; 
+    private String departureAirport;
+    private String destinationAirport;
+    private Date departureTime;
+    private int availableSeats;
+
+    public Flight(String flightNumber,String flightname, String departureAirport, String destinationAirport, Date departureTime, int availableSeats) {
+        this.flightNumber = flightNumber;
+        this.departureAirport = departureAirport;
+        this.destinationAirport = destinationAirport;
+        this.departureTime = departureTime;
+        this.availableSeats = availableSeats;
+        this.flightname=flightname;
+    }
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+    public String getflightname() {
+    	return flightname;
+    }
+    public String getDepartureAirport() {
+        return departureAirport;
+    }
+
+    public String getDestinationAirport() {
+        return destinationAirport;
+    }
+
+    public Date getDepartureTime() {
+        return departureTime;
+    }
+
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+}
+class Reservation {
+    private String reservationNumber;
+    private Flight flight;
+    private Passenger passenger;
+    private int numOfSeats;
+
+    public Reservation(String reservationNumber, Flight flight, Passenger passenger, int numOfSeats) {
+        this.reservationNumber = reservationNumber;
+        this.flight = flight;
+        this.passenger = passenger;
+        this.numOfSeats = numOfSeats;
+    }
+
+	public String getReservationNumber() {
+		return reservationNumber;
+	}
+
+	public Flight getFlight() {
+		return flight;
+	}
+
+	public Object getPassenger() {
+		return passenger;
+	}
+
+	public int getNumOfSeats() {
+		return numOfSeats;
+	}
+}
+class AirlineReservationSystem {
+    private List<Flight> flights;
+    private List<Reservation> reservations;
+    private int reservationCounter;
+
+    public AirlineReservationSystem() {
+        flights = new ArrayList<>();
+        reservations = new ArrayList<>();
+        reservationCounter = 1;
+    }
+
+    public void addFlight(Flight flight) {
+        flights.add(flight);
+    }
+
+    public Flight findFlight(String flightNumber) {
+        for (Flight flight : flights) {
+            if (flight.getFlightNumber().equalsIgnoreCase(flightNumber)) {
+                return flight;
+            }
+        }
+        return null;
+    }
+    public Reservation makeReservation(Flight flight, Passenger passenger, int numOfSeats) {
+        if (flight.getAvailableSeats() >= numOfSeats) {
+            Reservation reservation = new Reservation("R" + reservationCounter++, flight, passenger, numOfSeats);
+            reservations.add(reservation);
+            flight.setAvailableSeats(flight.getAvailableSeats() - numOfSeats);
+            return reservation;
+        }
+        return null;
+    }
+
+    public Reservation findReservationByNumber(String reservationNumber) {
+        for (Reservation reservation : reservations) {
+            if (reservation.getReservationNumber().equalsIgnoreCase(reservationNumber)) {
+                return reservation;
+            }
+        }
+        return null;
+    }
+
+    public void cancelReservation(Reservation reservation) {
+        reservations.remove(reservation);
+        Flight flight = reservation.getFlight();
+        flight.setAvailableSeats(flight.getAvailableSeats() + reservation.getNumOfSeats());
+    }
+
+    public List<Flight> getAllFlights() {
+        return flights;
+    }
+
+    public List<Reservation> getAllReservations() {
+        return reservations;
+    }
+}
+public class ReservationSystem{
+
+    public static void main(String[] args) {
+        AirlineReservationSystem reservationSystem = new AirlineReservationSystem();
+        Scanner scanner = new Scanner(System.in);
+        boolean b=true;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+            Date departureTime1 = sdf.parse("25-07-2023 10:00");
+            Date departureTime2 = sdf.parse("26-07-2023 14:30");
+            Flight flight1 = new Flight("FL001", "AirIndia","CHENNAI", "MUMBAI", departureTime1, 100);
+            Flight flight2 = new Flight("FL002", "Indigo","CHENNAI", "DELHI", departureTime2, 150);
+            reservationSystem.addFlight(flight1);
+            reservationSystem.addFlight(flight2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        while (b) {
+            System.out.println("********** Airline Reservation System **********");
+            System.out.println("1. View All Flights");
+            System.out.println("2. Make a Reservation");
+            System.out.println("3. Cancel a Reservation");
+            System.out.println("4. View All Reservations");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice (1-5): ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Available Flights:");
+                    for (Flight flight : reservationSystem.getAllFlights()) {
+                        System.out.println(flight.getFlightNumber() + " - "+flight.getflightname() +" - " + flight.getDepartureAirport() +
+                                " to " + flight.getDestinationAirport() + " at " + flight.getDepartureTime() +
+                                ", Available Seats: " + flight.getAvailableSeats());
+                    }
+                    break;
+                case 2:
+                    System.out.println("Enter the Flight Number: ");
+                    String flightNumber = scanner.nextLine();
+                    Flight flight = reservationSystem.findFlight(flightNumber);
+                    if (flight != null) {
+                        System.out.println("Enter your Name: ");
+                        String name = scanner.nextLine();
+                        System.out.println("Enter your Age: ");
+                        int age = scanner.nextInt();
+                        scanner.nextLine(); 
+                        System.out.println("Enter your Contact Information: ");
+                        long mobile = scanner.nextLong();
+
+                        System.out.println("Enter the number of seats to reserve: ");
+                        int numOfSeats = scanner.nextInt();
+                        scanner.nextLine(); 
+
+                        Passenger passenger = new Passenger(name, age, mobile);
+                        Reservation reservation = reservationSystem.makeReservation(flight, passenger, numOfSeats);
+                        if (reservation != null) {
+                            System.out.println("Reservation successful! Your reservation number is: " + reservation.getReservationNumber());
+                        } else {
+                            System.out.println("Reservation failed. Not enough available seats.");
+                        }
+                    } else {
+                        System.out.println("Flight not found.");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Enter your reservation number to cancel: ");
+                    String reservationNumber = scanner.nextLine();
+                    Reservation cancelReservation = reservationSystem.findReservationByNumber(reservationNumber);
+                    if (cancelReservation != null) {
+                        reservationSystem.cancelReservation(cancelReservation);
+                        System.out.println("Reservation canceled successfully.");
+                    } else {
+                        System.out.println("Reservation not found.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("All Reservations:");
+                    for (Reservation reservation : reservationSystem.getAllReservations()) {
+                        System.out.println("Reservation Number: " + reservation.getReservationNumber() +
+                                ", Flight: " + reservation.getFlight().getFlightNumber() +
+                                ", Passenger: " + reservation.getPassenger()+
+                                ", Seats: " + reservation.getNumOfSeats());
+                    }
+                    break;
+                case 5:
+                    System.out.println("Thank you for using the Airline Reservation System. Goodbye!");
+                    b=false;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
