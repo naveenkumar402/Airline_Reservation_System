@@ -16,6 +16,9 @@ class Passenger {
         this.age = age;
         this.mobile = mobile;
     }
+    public String getname() {
+    	return name;
+    }
 }
 
 class Flight {
@@ -34,6 +37,8 @@ class Flight {
         this.availableSeats = availableSeats;
         this.flightname=flightname;
     }
+
+    // Getters and setters
     public String getFlightNumber() {
         return flightNumber;
     }
@@ -59,7 +64,10 @@ class Flight {
     public void setAvailableSeats(int availableSeats) {
         this.availableSeats = availableSeats;
     }
+
+	
 }
+
 class Reservation {
     private String reservationNumber;
     private Flight flight;
@@ -82,13 +90,14 @@ class Reservation {
 	}
 
 	public Object getPassenger() {
-		return passenger;
+		return passenger.getname();
 	}
 
 	public int getNumOfSeats() {
 		return numOfSeats;
 	}
 }
+
 class AirlineReservationSystem {
     private List<Flight> flights;
     private List<Reservation> reservations;
@@ -112,6 +121,7 @@ class AirlineReservationSystem {
         }
         return null;
     }
+
     public Reservation makeReservation(Flight flight, Passenger passenger, int numOfSeats) {
         if (flight.getAvailableSeats() >= numOfSeats) {
             Reservation reservation = new Reservation("R" + reservationCounter++, flight, passenger, numOfSeats);
@@ -144,7 +154,10 @@ class AirlineReservationSystem {
     public List<Reservation> getAllReservations() {
         return reservations;
     }
+   
 }
+
+
 public class ReservationSystem{
 
     public static void main(String[] args) {
@@ -162,6 +175,8 @@ public class ReservationSystem{
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+
         while (b) {
             System.out.println("********** Airline Reservation System **********");
             System.out.println("1. View All Flights");
@@ -193,7 +208,7 @@ public class ReservationSystem{
                         System.out.println("Enter your Age: ");
                         int age = scanner.nextInt();
                         scanner.nextLine(); 
-                        System.out.println("Enter your Contact Information: ");
+                        System.out.println("Enter your Mobile number: ");
                         long mobile = scanner.nextLong();
 
                         System.out.println("Enter the number of seats to reserve: ");
