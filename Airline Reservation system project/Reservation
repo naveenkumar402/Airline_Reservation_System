@@ -1,0 +1,30 @@
+
+class Reservation {
+    private String reservationNumber;
+    private Flight flight;
+    private Passenger passenger;
+    private int numOfSeats;
+
+    public Reservation(String reservationNumber, Flight flight, Passenger passenger, int numOfSeats) {
+        this.reservationNumber = reservationNumber;
+        this.flight = flight;
+        this.passenger = passenger;
+        this.numOfSeats = numOfSeats;
+    }
+
+	public String getReservationNumber() {
+		return reservationNumber;
+	}
+
+	public Flight getFlight() {
+		return flight;
+	}
+
+	public Object getPassenger() {
+		return passenger.getname();
+	}
+
+	public int getNumOfSeats() {
+		return numOfSeats;
+	}
+}
