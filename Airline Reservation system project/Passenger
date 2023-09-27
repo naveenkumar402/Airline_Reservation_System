@@ -1,0 +1,21 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+
+class Passenger {
+    private String name;
+    private int age;
+    private long mobile;
+
+    public Passenger(String name, int age, long mobile) {
+        this.name = name;
+        this.age = age;
+        this.mobile = mobile;
+    }
+    public String getname() {
+    	return name;
+    }
+}
