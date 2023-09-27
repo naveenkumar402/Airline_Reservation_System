@@ -1,0 +1,59 @@
+class AirlineReservationSystem {
+    private List<Flight> flights;
+    private List<Reservation> reservations;
+    private int reservationCounter;
+
+    public AirlineReservationSystem() {
+        flights = new ArrayList<>();
+        reservations = new ArrayList<>();
+        reservationCounter = 1;
+    }
+
+    public void addFlight(Flight flight) {
+        flights.add(flight);
+    }
+
+    public Flight findFlight(String flightNumber) {
+        for (Flight flight : flights) {
+            if (flight.getFlightNumber().equalsIgnoreCase(flightNumber)) {
+                return flight;
+            }
+        }
+        return null;
+    }
+
+    public Reservation makeReservation(Flight flight, Passenger passenger, int numOfSeats) {
+        if (flight.getAvailableSeats() >= numOfSeats) {
+            Reservation reservation = new Reservation("R" + reservationCounter++, flight, passenger, numOfSeats);
+            reservations.add(reservation);
+            flight.setAvailableSeats(flight.getAvailableSeats() - numOfSeats);
+            return reservation;
+        }
+        return null;
+    }
+
+    public Reservation findReservationByNumber(String reservationNumber) {
+        for (Reservation reservation : reservations) {
+            if (reservation.getReservationNumber().equalsIgnoreCase(reservationNumber)) {
+                return reservation;
+            }
+        }
+        return null;
+    }
+
+    public void cancelReservation(Reservation reservation) {
+        reservations.remove(reservation);
+        Flight flight = reservation.getFlight();
+        flight.setAvailableSeats(flight.getAvailableSeats() + reservation.getNumOfSeats());
+    }
+
+    public List<Flight> getAllFlights() {
+        return flights;
+    }
+
+    public List<Reservation> getAllReservations() {
+        return reservations;
+    }
+   
+}
+
