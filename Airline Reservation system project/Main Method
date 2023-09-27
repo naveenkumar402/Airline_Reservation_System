@@ -6,68 +6,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
-class Passenger {
-    private String name;
-    private int age;
-    private long mobile;
-
-    public Passenger(String name, int age, long mobile) {
-        this.name = name;
-        this.age = age;
-        this.mobile = mobile;
-    }
-    public String getname() {
-    	return name;
-    }
-}
-
-class Flight {
-    private String flightNumber;
-    private String flightname; 
-    private String departureAirport;
-    private String destinationAirport;
-    private Date departureTime;
-    private int availableSeats;
-
-    public Flight(String flightNumber,String flightname, String departureAirport, String destinationAirport, Date departureTime, int availableSeats) {
-        this.flightNumber = flightNumber;
-        this.departureAirport = departureAirport;
-        this.destinationAirport = destinationAirport;
-        this.departureTime = departureTime;
-        this.availableSeats = availableSeats;
-        this.flightname=flightname;
-    }
-
-    // Getters and setters
-    public String getFlightNumber() {
-        return flightNumber;
-    }
-    public String getflightname() {
-    	return flightname;
-    }
-    public String getDepartureAirport() {
-        return departureAirport;
-    }
-
-    public String getDestinationAirport() {
-        return destinationAirport;
-    }
-
-    public Date getDepartureTime() {
-        return departureTime;
-    }
-
-    public int getAvailableSeats() {
-        return availableSeats;
-    }
-
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
-    }
-
-	
-}
-
 class Reservation {
     private String reservationNumber;
     private Flight flight;
